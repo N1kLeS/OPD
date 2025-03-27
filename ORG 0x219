@@ -1,0 +1,27 @@
+ORG 0x219
+A: WORD $ARR
+B: WORD 0x0200
+N: WORD 0x4000
+R: WORD 0xE000
+START:
+ CLA
+ ST R
+ LD #20
+ ST N
+ ADD A
+ ST B
+ l1: LD -(B)
+      S: SUB #9
+         BNS L
+         BZS X 
+         JUMP S
+
+ X:  LD R
+    ADD (B)
+    ST R
+
+ L: LOOP $N
+     JUMP l1
+ HLT
+
+ARR: WORD 9, 18, 19, 27, 36, 37, 6, 7, 8, 18, 19, 12, 41, 16, 15, 17, 20, 21, 14, 9
