@@ -1,0 +1,11 @@
+ORG 0x5AC
+
+STATR: CLA 
+    S1: 
+        IN 0x19
+        AND #0x40
+        BEQ S1
+        IN 0x18
+        OUT 0x0C
+        JUMP S1
+
