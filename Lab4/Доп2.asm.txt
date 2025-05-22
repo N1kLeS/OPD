@@ -1,0 +1,94 @@
+ORG 0X100
+
+x0: WORD 0x0000
+y0: WORD 0x0000
+
+B: WORD 0x0200
+N: WORD 0x0008
+
+O: WORD 0xFFF0
+AN: WORD 0x0008
+AN1:WORD 0x000F
+
+REZ: WORD 0x0000
+
+ARR: WORD $AR 
+
+    
+FN: 
+    LD &2 
+    ADD &4
+    ST &4
+
+    LD &1
+    AND AN
+    BEQ S1
+    BNE S2
+       
+    S1: LD &1
+        AND AN1
+        ST REZ
+        JUMP J1
+
+    S2: LD &1
+        OR O
+        ST REZ
+        JUMP J1
+
+    J1: LD &3
+        AND AN
+        BEQ P1
+        BNE P2
+
+        P1: LD &3
+            AND AN1
+            JUMP J2
+
+        P2: LD &3
+            OR O    
+            JUMP J2
+
+    J2: ADC REZ
+        ST &3
+        RET
+    
+ 
+START: 
+ LD #4
+ ST N
+ ADD ARR
+ ST B
+ CLA
+
+ l0:
+     PUSH
+     PUSH
+
+ l1: LD -(B)
+     PUSH
+     LD N
+     DEC
+     ST N
+     LD -(B)
+     PUSH
+     LD N
+     DEC
+     ST N
+     JUMP l2
+
+ l2:
+     CALL $FN
+     POP
+     POP
+     LD N
+     BZS l3
+     JUMP l1
+
+ l3:
+     POP
+     ST x0
+     POP
+     ST y0
+     HLT
+
+AR: WORD -1, 2, 8, 4     

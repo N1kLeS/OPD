@@ -1,0 +1,69 @@
+ORG 0X100
+
+x0: WORD 0x000A
+y0: WORD 0x000A
+
+A0: WORD 2
+A1: WORD 2
+
+B0: WORD 3
+B1: WORD 3
+
+C0: WORD 2
+C1: WORD 2
+
+D0: WORD 3
+D1: WORD 3
+    
+FN: 
+    LD &1 
+    ADD &3
+    ADD &5
+    ADD &7
+    ST &9
+
+    LD &2
+    ADC &4
+    ADC &6
+    ADC &8
+    SXTB
+    ST &10
+
+    RET
+ 
+START: 
+    PUSH
+    PUSH
+    LD A1
+    PUSH
+    LD A0
+    PUSH
+    LD B1
+    PUSH
+    LD B0
+    PUSH
+    LD C1
+    PUSH
+    LD C0
+    PUSH
+    LD D1
+    PUSH
+    LD D0
+    PUSH
+
+    CALL $FN
+
+    POP
+    POP
+    POP
+    POP
+    POP
+    POP
+    POP
+    POP
+
+    POP
+    ST x0
+    POP
+    ST y0
+    HLT
