@@ -1,3 +1,4 @@
+БЕТКА:
 ORG 0x5AC
 
 STATR: CLA 
@@ -6,6 +7,39 @@ STATR: CLA
         AND #0x40
         BEQ S1
         IN 0x18
+        CMP #0x2E
         OUT 0x0C
+        BEQ POK
         JUMP S1
 
+    POK: HLT
+-------------------------------------------------------------------
+ГОТОВАЯ РАБОТА:
+ORG 0x5AC
+
+ADR_AR: WORD 0x05CC
+ADRES: WORD 0x05CC
+
+STATR: CLA 
+    INN: 
+        IN 0x19
+        AND #0x40
+        BEQ INN
+        IN 0x18
+        ST (ADRES)+
+        CMP #0x2E
+        BEQ OUTT
+        JUMP INN
+
+    OUTT: LD ADR_AR
+          CMP ADRES
+          LD (ADR_AR)+
+          OUT 0x0C
+          BEQ POK
+          JUMP OUTT
+          
+
+    POK: HLT
+
+ORG 0x5CC
+ARR: WORD ?    
