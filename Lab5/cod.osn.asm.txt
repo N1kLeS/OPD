@@ -1,7 +1,7 @@
 ORG 0x5AE
 ARR: WORD 0x1505, 0x0404, 0x060D
 
-MASK: 0x00FF 
+MASK: WORD 0x00FF 
 
 CUR: WORD 0X5AE
 
@@ -13,7 +13,7 @@ STATR: CLA
         OUT 0x06
         AND MASK
         CMP #0D 
-        BEQ END
+        BEQ EN
 
     S2: IN 0X07
         AND #0x40
@@ -23,8 +23,8 @@ STATR: CLA
         OUT 0x06
         AND MASK
         CMP #0D
-        BEQ END
+        BEQ EN
         JUMP S1
 
-END: 
-    HLT
+    EN: 
+        HLT

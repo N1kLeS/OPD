@@ -1,0 +1,81 @@
+ORG 0x0
+
+V0: WORD $default, 0x180
+V1: WORD $default, 0x180
+V2: WORD $int2, 0x180
+V3: WORD $int3, 0x180
+V4: WORD $default, 0x180
+V5: WORD $default, 0x180
+V6: WORD $default, 0x180
+V7: WORD $default, 0x180
+default: IRET
+
+ORG 0x040
+X: WORD ?
+buf: WORD ?
+
+min: WORD -30
+max: WORD 34
+
+START:
+    CLA
+    DI
+    OUT 0x1
+    OUT 0xB
+    OUT 0xD
+    OUT 0x11
+    OUT 0x15
+    OUT 0x19
+    OUT 0x1D
+    LD #0xA
+    OUT 5
+    LD #0xB
+    OUT 7
+    EI
+
+main: 
+    DI
+    LD X
+    SUB #2
+    CALL ODZ
+    ST X
+    EI
+    JUMP main
+
+ODZ: 
+    ODZ_MIN: CMP min   
+    BPL ODZ_MAX
+    JUMP ld_max
+    ODZ_MAX: CMP max
+    BMI return
+    ld_max: LD max  
+    return: RET    
+
+int2: 
+    DI
+    IN 4
+    ST buf
+    ADD buf
+    ADD buf
+    ADD X
+    ST X
+    HLT
+    EI
+    IRET
+
+
+int3: 
+    DI
+    LD X
+    ADD X
+    ADD X
+    ADD X
+    ADD X
+    ADD X
+    NEG
+    SUB #4
+    CALL ODZ
+    OUT 6
+    HLT
+    EI
+    IRET
