@@ -1,0 +1,33 @@
+ORG 0x011
+X1: WORD 0x0004
+X2: WORD 0x0002
+
+ORG 0x258
+START: 
+    CALL TEST1
+    HLT
+    CALL TEST2
+    HLT
+    CALL TEST3
+    HLT
+    CALL TEST4
+    HLT
+
+
+TEST1:
+    WORD 0x9011  
+    RET  
+
+TEST2:
+    WORD 0x9801
+    RET
+ADDR_X2: WORD 0x12  
+
+TEST3:
+    WORD 0x9E01
+    RET
+X3: WORD 0x0004
+
+TEST4:
+    WORD 0x9F10
+    RET
